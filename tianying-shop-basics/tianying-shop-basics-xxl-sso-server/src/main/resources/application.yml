@@ -1,0 +1,32 @@
+spring:
+  application:
+    name: app-tianying-xxl-sso-server
+  freemarker:
+    settings:
+      number_format: 0.##########
+    charset: UTF-8
+    request-context-attribute: request
+    templateLoaderPath: classpath:/templates/
+    suffix: .ftl
+  resources:
+    static-locations: classpath:/static/
+  mvc:
+    static-path-pattern: /static/**
+###服务注册到eureka地址
+eureka:
+  client:
+    service-url:
+           defaultZone: http://10.6.105.185:8080/eureka
+server:
+#  context-path: /xxl-sso-server
+  port: 8981
+  servlet:
+    context-path: /xxl-sso-server
+
+xxl:
+  sso:
+    redis:
+      address: redis://xxltest-sso:wmsrfredis@10.6.24.249:6379/0
+#      address: redis://127.0.0.1:6379
+      expire:
+        minite: 1440
