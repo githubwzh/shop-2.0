@@ -1,19 +1,27 @@
 package com.tianying.pay.controller;
 
-import java.util.List;
-
+import com.alibaba.fastjson.JSONObject;
+import com.tianying.base.BaseResponse;
+import com.tianying.pay.feign.PayContextFeign;
+import com.tianying.pay.feign.PayMentTransacInfoFeign;
+import com.tianying.pay.feign.PaymentChannelFeign;
+import com.tianying.pay.output.dto.PayMentTransacDTO;
+import com.tianying.pay.output.dto.PaymentChannelDTO;
+import com.tianying.web.base.BaseWebController;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.util.List;
 
 /**
- * 
- * 
- * 
+ *
+ *
+ *
  * @description: 支付网站
  * @author: 97后互联网架构师-余胜军
  * @contact: QQ644064779、微信yushengjun644 www.mayikt.com
@@ -23,32 +31,53 @@ import org.springframework.web.bind.annotation.RequestMapping;
  *            私自分享视频和源码属于违法行为。
  */
 @Controller
-public class PayController {
-//	@Autowired
-//	private PayMentTransacInfoFeign payMentTransacInfoFeign;
-//	@Autowired
-//	private PaymentChannelFeign paymentChannelFeign;
+public class PayController extends BaseWebController {
+	@Autowired
+	private PayMentTransacInfoFeign payMentTransacInfoFeign;
+	@Autowired
+	private PaymentChannelFeign paymentChannelFeign;
+	@Autowired
+	private PayContextFeign payContextFeign;
 
-	@RequestMapping("/")
+	@RequestMapping("/pay")
 	public String pay(String payToken, Model model) {
-//		// 1.验证payToken参数
-//		if (StringUtils.isEmpty(payToken)) {
-//			setErrorMsg(model, "支付令牌不能为空!");
-//			return ERROR_500_FTL;
-//		}
-//		// 2.使用payToken查询支付信息
-//		BaseResponse<PayMentTransacDTO> tokenByPayMentTransac = payMentTransacInfoFeign.tokenByPayMentTransac(payToken);
-//		if (!isSuccess(tokenByPayMentTransac)) {
-//			setErrorMsg(model, tokenByPayMentTransac.getMsg());
-//			return ERROR_500_FTL;
-//		}
-//		// 3.查询支付信息
-//		PayMentTransacDTO data = tokenByPayMentTransac.getData();
-//		model.addAttribute("data", data);
-//		// 4.查询渠道信息
-//		List<PaymentChannelDTO> paymentChanneList = paymentChannelFeign.selectAll();
-//		model.addAttribute("paymentChanneList", paymentChanneList);
+		// 1.验证payToken参数
+		if (StringUtils.isEmpty(payToken)) {
+			setErrorMsg(model, "支付令牌不能为空!");
+			return ERROR_500_FTL;
+		}
+		// 2.使用payToken查询支付信息
+		BaseResponse<PayMentTransacDTO> tokenByPayMentTransac = payMentTransacInfoFeign.tokenByPayMentTransac(payToken);
+		if (!isSuccess(tokenByPayMentTransac)) {
+			setErrorMsg(model, tokenByPayMentTransac.getMsg());
+			return ERROR_500_FTL;
+		}
+		// 3.查询支付信息
+		PayMentTransacDTO data = tokenByPayMentTransac.getData();
+		model.addAttribute("data", data);
+		// 4.查询渠道信息
+		List<PaymentChannelDTO> paymentChanneList = paymentChannelFeign.selectAll();
+		model.addAttribute("paymentChanneList", paymentChanneList);
+		model.addAttribute("payToken", payToken);
 		return "index";
+	}
+
+	/**
+	 *
+	 * @param payToken
+	 * @return
+	 * @throws IOException
+	 */
+	@RequestMapping("/payHtml")
+	public void payHtml(String channelId, String payToken, HttpServletResponse response) throws IOException {
+		response.setContentType("text/html; charset=utf-8");
+		BaseResponse<JSONObject> payHtmlData = payContextFeign.toPayHtml(channelId, payToken);
+		if (isSuccess(payHtmlData)) {
+			JSONObject data = payHtmlData.getData();
+			String payHtml = data.getString("payHtml");
+			response.getWriter().print(payHtml);
+		}
+
 	}
 
 }

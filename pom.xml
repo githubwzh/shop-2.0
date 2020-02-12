@@ -9,9 +9,9 @@
   	<module>tianying-shop-portal</module>
   	<module>tianying-shop-service</module>
   	<module>tianying-shop-service-api</module>
-  	<module>tianying-shop-api-entities</module>
   	<module>tianying-shop-common</module>
   	<module>tianying-shop-api-dto</module>
+      <module>tianying-shop-pays-plugins</module>
   </modules>
  <parent>
 		<groupId>org.springframework.boot</groupId>
@@ -63,11 +63,6 @@
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
 		</dependency>
-		<dependency>
-			<groupId>org.apache.commons</groupId>
-			<artifactId>commons-lang3</artifactId>
-		</dependency>
-
 	</dependencies>
 	<!-- 管理依赖 -->
 	<dependencyManagement>

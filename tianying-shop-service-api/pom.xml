@@ -13,6 +13,7 @@
   	<module>tianying-shop-service-api-member</module>
   	<module>tianying-shop-service-api-weixin</module>
       <module>tianying-shop-service-api-goods</module>
+      <module>tianying-shop-service-api-pay</module>
   </modules>
     	<dependencies>
 		

@@ -10,8 +10,8 @@
   <modules>
   	<module>tianying-shop-service-member</module>
   	<module>tianying-shop-service-weixin</module>
-      <module>tianying-shop-service-product</module>
       <module>tianying-shop-service-goods</module>
+      <module>tianying-shop-service-pay</module>
   </modules>
   
     <dependencies>
