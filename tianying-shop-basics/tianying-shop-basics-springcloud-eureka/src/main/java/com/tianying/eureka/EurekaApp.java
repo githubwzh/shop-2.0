@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package com.tianying.eureka;
 
@@ -17,15 +17,15 @@ import org.springframework.cloud.netflix.eureka.server.EnableEurekaServer;
 @SpringBootApplication
 public class EurekaApp {
 
-	/** 
-	 *
-	 * @param args
-	 * date: 2019年4月16日 下午2:50:25
-	 * @author wangzhanhua
-	 */
-	public static void main(String[] args) {
-		SpringApplication.run(EurekaApp.class, args);
+    /**
+     *
+     * @param args
+     * date: 2019年4月16日 下午2:50:25
+     * @author wangzhanhua
+     */
+    public static void main(String[] args) {
+        SpringApplication.run(EurekaApp.class, args);
 
-	}
+    }
 
 }

@@ -5,10 +5,10 @@ server:
 eureka:
   client:
     service-url:
-           defaultZone: http://10.6.105.185:8080/eureka
+      defaultZone: http://10.6.105.185:8080/eureka
 
 
-  
+
 spring:
   application:
     name:  app-tianying-goods
@@ -27,13 +27,13 @@ spring:
     password: wmstest
     driver-class-name: com.mysql.jdbc.Driver
     url: jdbc:mysql://10.6.86.36:3306/meite_member?useUnicode=true&characterEncoding=UTF-8
-#    url: jdbc:mysql://127.0.0.1:3306/goods?useUnicode=true&characterEncoding=UTF-
+  #    url: jdbc:mysql://127.0.0.1:3306/goods?useUnicode=true&characterEncoding=UTF-
   data:
     elasticsearch:
-    ####集群名称
-     cluster-name: elasticsearch-cluster
-    ####地址 
-     cluster-nodes: 192.168.253.145:9300
+      ####集群名称
+      cluster-name: elasticsearch-cluster
+      ####地址
+      cluster-nodes: 192.168.253.145:9300
   kafka:
     # kafka服务器地址(可以多个)
     bootstrap-servers: 192.168.253.145:9092

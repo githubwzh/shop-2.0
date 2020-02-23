@@ -24,22 +24,22 @@ import java.util.List;
 @RestController
 @Slf4j
 public class ProductSearchServiceImpl extends BaseApiService<List<ProductDto>> implements ProductSearchService {
-	@Autowired
-	private ProductReposiory productReposiory;
+    @Autowired
+    private ProductReposiory productReposiory;
 
-	@Override
-	public BaseResponse<List<ProductDto>> search(String name) {
-		log.info("###全局捕获3333333333333异常###,error:{}");
-		int m = 1/0;
-		BoolQueryBuilder builder = QueryBuilders.boolQuery();
-		// 模拟查询
-		builder.must(QueryBuilders.fuzzyQuery("name", name));
-		Pageable pageable = new QPageRequest(0, 5);
-		Page<ProductEntity> page = productReposiory.search(builder, pageable);
-		List<ProductEntity> content = page.getContent();
-		MapperFactory mapperFactory = new DefaultMapperFactory.Builder().build();
-		List<ProductDto> mapAsList = mapperFactory.getMapperFacade().mapAsList(content, ProductDto.class);
-		return setResultSuccess(mapAsList);
-	}
+    @Override
+    public BaseResponse<List<ProductDto>> search(String name) {
+        log.info("###全局捕获3333333333333异常###,error:{}");
+        int m = 1 / 0;
+        BoolQueryBuilder builder = QueryBuilders.boolQuery();
+        // 模拟查询
+        builder.must(QueryBuilders.fuzzyQuery("name", name));
+        Pageable pageable = new QPageRequest(0, 5);
+        Page<ProductEntity> page = productReposiory.search(builder, pageable);
+        List<ProductEntity> content = page.getContent();
+        MapperFactory mapperFactory = new DefaultMapperFactory.Builder().build();
+        List<ProductDto> mapAsList = mapperFactory.getMapperFacade().mapAsList(content, ProductDto.class);
+        return setResultSuccess(mapAsList);
+    }
 
 }

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="UTF-8" />
+    <meta charset="UTF-8"/>
     <title>统一认证中心</title>
 
     <#import "common/common.macro.ftl" as netCommon>
@@ -9,9 +9,9 @@
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper">
-        <!-- header -->
+    <!-- header -->
     <@netCommon.commonHeader />
-        <!-- left -->
+    <!-- left -->
     <@netCommon.commonLeft "help" />
 
     <!-- Content Wrapper. Contains page content -->
@@ -28,7 +28,9 @@
                 <br>
                 <p>
                     <a target="_blank" href="https://github.com/xuxueli/xxl-sso">Github</a>&nbsp;&nbsp;&nbsp;&nbsp;
-                    <iframe src="https://ghbtns.com/github-btn.html?user=xuxueli&repo=xxl-sso&type=star&count=true" frameborder="0" scrolling="0" width="170px" height="20px" style="margin-bottom:-5px;"></iframe>
+                    <iframe src="https://ghbtns.com/github-btn.html?user=xuxueli&repo=xxl-sso&type=star&count=true"
+                            frameborder="0" scrolling="0" width="170px" height="20px"
+                            style="margin-bottom:-5px;"></iframe>
                     <br><br>
                     <a target="_blank" href="http://www.xuxueli.com/xxl-sso/">文档地址</a>
                     <br><br>
@@ -42,7 +44,7 @@
     <!-- /.content-wrapper -->
 
     <!-- footer -->
-<@netCommon.commonFooter />
+    <@netCommon.commonFooter />
 </div>
 <@netCommon.commonScript />
 </body>

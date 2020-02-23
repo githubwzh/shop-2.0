@@ -31,143 +31,143 @@ import java.util.UUID;
  */
 @Controller
 public class WebController extends BaseWebController {
-	@Autowired
-	private MemberServiceFeign memberServiceFeign;
+    @Autowired
+    private MemberServiceFeign memberServiceFeign;
 
-	@Value("${server.port}")
-	private String serverPort;
+    @Value("${server.port}")
+    private String serverPort;
 
-	@RequestMapping("/")
-	public String index(Model model, HttpServletRequest request, HttpServletResponse response) {
-		System.out.println("serverPort:"+serverPort);
-		// login check
-		XxlSsoUser xxlUser = SsoWebLoginHelper.loginCheck(request, response);
+    @RequestMapping("/")
+    public String index(Model model, HttpServletRequest request, HttpServletResponse response) {
+        System.out.println("serverPort:" + serverPort);
+        // login check
+        XxlSsoUser xxlUser = SsoWebLoginHelper.loginCheck(request, response);
 
-		if (xxlUser == null) {
-			return "redirect:/login";
-		} else {
-			model.addAttribute("xxlUser", xxlUser);
-			return "index";
-		}
-	}
+        if (xxlUser == null) {
+            return "redirect:/login";
+        } else {
+            model.addAttribute("xxlUser", xxlUser);
+            return "index";
+        }
+    }
 
-	/**
-	 * Login page
-	 *
-	 * @param model
-	 * @param request
-	 * @return
-	 */
-	@RequestMapping(Conf.SSO_LOGIN)
-	public String login(Model model, HttpServletRequest request, HttpServletResponse response) {
-		System.out.println("serverPort2222:"+serverPort);
-		// login check
-		XxlSsoUser xxlUser = SsoWebLoginHelper.loginCheck(request, response);
+    /**
+     * Login page
+     *
+     * @param model
+     * @param request
+     * @return
+     */
+    @RequestMapping(Conf.SSO_LOGIN)
+    public String login(Model model, HttpServletRequest request, HttpServletResponse response) {
+        System.out.println("serverPort2222:" + serverPort);
+        // login check
+        XxlSsoUser xxlUser = SsoWebLoginHelper.loginCheck(request, response);
 
-		if (xxlUser != null) {
+        if (xxlUser != null) {
 
-			// success redirect
-			String redirectUrl = request.getParameter(Conf.REDIRECT_URL);
-			if (redirectUrl != null && redirectUrl.trim().length() > 0) {
+            // success redirect
+            String redirectUrl = request.getParameter(Conf.REDIRECT_URL);
+            if (redirectUrl != null && redirectUrl.trim().length() > 0) {
 
-				String sessionId = SsoWebLoginHelper.getSessionIdByCookie(request);
-				String redirectUrlFinal = redirectUrl + "?" + Conf.SSO_SESSIONID + "=" + sessionId;
-				;
+                String sessionId = SsoWebLoginHelper.getSessionIdByCookie(request);
+                String redirectUrlFinal = redirectUrl + "?" + Conf.SSO_SESSIONID + "=" + sessionId;
+                ;
 
-				return "redirect:" + redirectUrlFinal;
-			} else {
-				return "redirect:/";
-			}
-		}
+                return "redirect:" + redirectUrlFinal;
+            } else {
+                return "redirect:/";
+            }
+        }
 
-		model.addAttribute("errorMsg", request.getParameter("errorMsg"));
-		model.addAttribute(Conf.REDIRECT_URL, request.getParameter(Conf.REDIRECT_URL));
-		return "login";
-	}
+        model.addAttribute("errorMsg", request.getParameter("errorMsg"));
+        model.addAttribute(Conf.REDIRECT_URL, request.getParameter(Conf.REDIRECT_URL));
+        return "login";
+    }
 
-	/**
-	 * Login
-	 *
-	 * @param request
-	 * @param redirectAttributes
-	 * @param username
-	 * @param password
-	 * @return
-	 */
-	@RequestMapping("/doLogin")
-	public String doLogin(HttpServletRequest request, HttpServletResponse response,
-			RedirectAttributes redirectAttributes, String username, String password, String ifRemember) {
+    /**
+     * Login
+     *
+     * @param request
+     * @param redirectAttributes
+     * @param username
+     * @param password
+     * @return
+     */
+    @RequestMapping("/doLogin")
+    public String doLogin(HttpServletRequest request, HttpServletResponse response,
+                          RedirectAttributes redirectAttributes, String username, String password, String ifRemember) {
 
-		boolean ifRem = (ifRemember != null && "on".equals(ifRemember)) ? true : false;
+        boolean ifRem = (ifRemember != null && "on".equals(ifRemember)) ? true : false;
 
-		// valid login 调用会员服务进行验证
-		// ReturnT<UserInfo> result = userService.findUser(username, password);
-		// if (result.getCode() != ReturnT.SUCCESS_CODE) {
-		// redirectAttributes.addAttribute("errorMsg", result.getMsg());
-		//
-		// redirectAttributes.addAttribute(Conf.REDIRECT_URL,
-		// request.getParameter(Conf.REDIRECT_URL));
-		// return "redirect:/login";
-		// }
-		// >>>>>>>认证授权中心调用会员服务接口进行验证
-		UserLoginInpDTO userLoginInpDTO = new UserLoginInpDTO();
-		userLoginInpDTO.setLoginType(Constants.MEMBER_LOGIN_TYPE_PC);
-		userLoginInpDTO.setMobile(username);
-		userLoginInpDTO.setPassword(password);
-		String info = webBrowserInfo(request);
-		userLoginInpDTO.setDeviceInfor(info);
-		BaseResponse<UserOutDTO> ssoLogin = memberServiceFeign.ssoLogin(userLoginInpDTO);
-		if (!isSuccess(ssoLogin)) {
-			redirectAttributes.addAttribute("errorMsg", ssoLogin.getMsg());
-			redirectAttributes.addAttribute(Conf.REDIRECT_URL, request.getParameter(Conf.REDIRECT_URL));
-			return "redirect:/login";
-		}
-		UserOutDTO data = ssoLogin.getData();
-		if (data == null) {
-			redirectAttributes.addAttribute("errorMsg", "没有获取用户信息");
-			redirectAttributes.addAttribute(Conf.REDIRECT_URL, request.getParameter(Conf.REDIRECT_URL));
-			return "redirect:/login";
-		}
-		XxlSsoUser xxlUser = new XxlSsoUser();
-		xxlUser.setUserid(String.valueOf(data.getUserId()));
-		xxlUser.setUsername(data.getUserName());
-		xxlUser.setVersion(UUID.randomUUID().toString().replaceAll("-", ""));
-		xxlUser.setExpireMinite(SsoLoginStore.getRedisExpireMinite());
-		xxlUser.setExpireFreshTime(System.currentTimeMillis());
+        // valid login 调用会员服务进行验证
+        // ReturnT<UserInfo> result = userService.findUser(username, password);
+        // if (result.getCode() != ReturnT.SUCCESS_CODE) {
+        // redirectAttributes.addAttribute("errorMsg", result.getMsg());
+        //
+        // redirectAttributes.addAttribute(Conf.REDIRECT_URL,
+        // request.getParameter(Conf.REDIRECT_URL));
+        // return "redirect:/login";
+        // }
+        // >>>>>>>认证授权中心调用会员服务接口进行验证
+        UserLoginInpDTO userLoginInpDTO = new UserLoginInpDTO();
+        userLoginInpDTO.setLoginType(Constants.MEMBER_LOGIN_TYPE_PC);
+        userLoginInpDTO.setMobile(username);
+        userLoginInpDTO.setPassword(password);
+        String info = webBrowserInfo(request);
+        userLoginInpDTO.setDeviceInfor(info);
+        BaseResponse<UserOutDTO> ssoLogin = memberServiceFeign.ssoLogin(userLoginInpDTO);
+        if (!isSuccess(ssoLogin)) {
+            redirectAttributes.addAttribute("errorMsg", ssoLogin.getMsg());
+            redirectAttributes.addAttribute(Conf.REDIRECT_URL, request.getParameter(Conf.REDIRECT_URL));
+            return "redirect:/login";
+        }
+        UserOutDTO data = ssoLogin.getData();
+        if (data == null) {
+            redirectAttributes.addAttribute("errorMsg", "没有获取用户信息");
+            redirectAttributes.addAttribute(Conf.REDIRECT_URL, request.getParameter(Conf.REDIRECT_URL));
+            return "redirect:/login";
+        }
+        XxlSsoUser xxlUser = new XxlSsoUser();
+        xxlUser.setUserid(String.valueOf(data.getUserId()));
+        xxlUser.setUsername(data.getUserName());
+        xxlUser.setVersion(UUID.randomUUID().toString().replaceAll("-", ""));
+        xxlUser.setExpireMinite(SsoLoginStore.getRedisExpireMinite());
+        xxlUser.setExpireFreshTime(System.currentTimeMillis());
 
-		// 2、make session id
-		String sessionId = SsoSessionIdHelper.makeSessionId(xxlUser);
+        // 2、make session id
+        String sessionId = SsoSessionIdHelper.makeSessionId(xxlUser);
 
-		// 3、login, store storeKey + cookie sessionId
-		SsoWebLoginHelper.login(response, sessionId, xxlUser, ifRem);
+        // 3、login, store storeKey + cookie sessionId
+        SsoWebLoginHelper.login(response, sessionId, xxlUser, ifRem);
 
-		// 4、return, redirect sessionId
-		String redirectUrl = request.getParameter(Conf.REDIRECT_URL);
-		if (redirectUrl != null && redirectUrl.trim().length() > 0) {
-			String redirectUrlFinal = redirectUrl + "?" + Conf.SSO_SESSIONID + "=" + sessionId;
-			return "redirect:" + redirectUrlFinal;
-		} else {
-			return "redirect:/";
-		}
+        // 4、return, redirect sessionId
+        String redirectUrl = request.getParameter(Conf.REDIRECT_URL);
+        if (redirectUrl != null && redirectUrl.trim().length() > 0) {
+            String redirectUrlFinal = redirectUrl + "?" + Conf.SSO_SESSIONID + "=" + sessionId;
+            return "redirect:" + redirectUrlFinal;
+        } else {
+            return "redirect:/";
+        }
 
-	}
+    }
 
-	/**
-	 * Logout
-	 *
-	 * @param request
-	 * @param redirectAttributes
-	 * @return
-	 */
-	@RequestMapping(Conf.SSO_LOGOUT)
-	public String logout(HttpServletRequest request, HttpServletResponse response,
-			RedirectAttributes redirectAttributes) {
+    /**
+     * Logout
+     *
+     * @param request
+     * @param redirectAttributes
+     * @return
+     */
+    @RequestMapping(Conf.SSO_LOGOUT)
+    public String logout(HttpServletRequest request, HttpServletResponse response,
+                         RedirectAttributes redirectAttributes) {
 
-		// logout
-		SsoWebLoginHelper.logout(request, response);
+        // logout
+        SsoWebLoginHelper.logout(request, response);
 
-		redirectAttributes.addAttribute(Conf.REDIRECT_URL, request.getParameter(Conf.REDIRECT_URL));
-		return "redirect:/login";
-	}
+        redirectAttributes.addAttribute(Conf.REDIRECT_URL, request.getParameter(Conf.REDIRECT_URL));
+        return "redirect:/login";
+    }
 
 }

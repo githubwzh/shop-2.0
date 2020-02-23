@@ -8,14 +8,14 @@ import org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfigurat
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 
-@SpringBootApplication(exclude = { DataSourceAutoConfiguration.class,
-		DataSourceTransactionManagerAutoConfiguration.class, HibernateJpaAutoConfiguration.class })
+@SpringBootApplication(exclude = {DataSourceAutoConfiguration.class,
+        DataSourceTransactionManagerAutoConfiguration.class, HibernateJpaAutoConfiguration.class})
 @EnableEurekaClient
 @EnableFeignClients
 public class PayWeb {
 
-	public static void main(String[] args) {
-		SpringApplication.run(PayWeb.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(PayWeb.class, args);
+    }
 
 }

@@ -1,4 +1,4 @@
-function demoA(){
-	alert('mayikt');
-	
+function demoA() {
+    alert('mayikt');
+
 }

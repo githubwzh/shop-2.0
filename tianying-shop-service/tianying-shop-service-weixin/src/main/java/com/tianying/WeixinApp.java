@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package com.tianying;
 
@@ -23,15 +23,15 @@ import com.spring4all.swagger.EnableSwagger2Doc;
 @EnableFeignClients
 public class WeixinApp {
 
-	/** 
-	 *
-	 * @param args
-	 * date: 2019年4月16日 下午3:51:50
-	 * @author wangzhanhua
-	 */
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-       SpringApplication.run(WeixinApp.class, args);
-	}
+    /**
+     *
+     * @param args
+     * date: 2019年4月16日 下午3:51:50
+     * @author wangzhanhua
+     */
+    public static void main(String[] args) {
+        // TODO Auto-generated method stub
+        SpringApplication.run(WeixinApp.class, args);
+    }
 
 }

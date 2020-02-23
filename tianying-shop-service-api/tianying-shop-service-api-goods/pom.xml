@@ -10,13 +10,13 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>tianying-shop-service-api-goods</artifactId>
-<dependencies>
-    <dependency>
-        <groupId>com.tianying</groupId>
-        <artifactId>tianying-shop-api-product-dto</artifactId>
-        <version>0.0.1-RELEASE</version>
-    </dependency>
+    <dependencies>
+        <dependency>
+            <groupId>com.tianying</groupId>
+            <artifactId>tianying-shop-api-product-dto</artifactId>
+            <version>0.0.1-RELEASE</version>
+        </dependency>
 
-</dependencies>
+    </dependencies>
 
 </project>

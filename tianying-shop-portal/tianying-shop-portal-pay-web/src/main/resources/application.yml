@@ -1,23 +1,23 @@
 #### 整合freemarker
 spring:
-    freemarker:
-        cache: false
-        charset: UTF-8
-        check-template-location: true
-        content-type: text/html
-        expose-request-attributes: true
-        expose-session-attributes: true
-        request-context-attribute: request
-        suffix: .ftl
-        template-loader-path:
-        - classpath:/templates
-    application:
-        name: app-tianying-portal-pay-web
+  freemarker:
+    cache: false
+    charset: UTF-8
+    check-template-location: true
+    content-type: text/html
+    expose-request-attributes: true
+    expose-session-attributes: true
+    request-context-attribute: request
+    suffix: .ftl
+    template-loader-path:
+      - classpath:/templates
+  application:
+    name: app-tianying-portal-pay-web
 ###服务注册到eureka地址
 eureka:
   client:
     service-url:
-           defaultZone: http://10.6.105.185:8080/eureka
+      defaultZone: http://10.6.105.185:8080/eureka
 server:
   port: 8982
 
@@ -29,7 +29,7 @@ redis:
 
 xxl-sso:
   excluded:
-    paths: 
+    paths:
 xxl:
   sso:
     server: http://xxlssoserver.com/xxl-sso-server

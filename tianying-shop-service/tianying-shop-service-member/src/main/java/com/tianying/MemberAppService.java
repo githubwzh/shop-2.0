@@ -8,10 +8,10 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 
 import com.ctrip.framework.apollo.spring.annotation.EnableApolloConfig;
 import com.spring4all.swagger.EnableSwagger2Doc;
+
 /**
- * 
  * @author wangzhanhua
- *
+ * <p>
  * 2019年4月15日上午10:35:38
  */
 @SpringBootApplication
@@ -19,12 +19,12 @@ import com.spring4all.swagger.EnableSwagger2Doc;
 @EnableFeignClients
 @EnableSwagger2Doc
 @EnableApolloConfig
-@MapperScan(basePackages="com.tianying.member.mapper")
+@MapperScan(basePackages = "com.tianying.member.mapper")
 public class MemberAppService {
 
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-         SpringApplication.run(MemberAppService.class, args);
-	}
+    public static void main(String[] args) {
+        // TODO Auto-generated method stub
+        SpringApplication.run(MemberAppService.class, args);
+    }
 
 }

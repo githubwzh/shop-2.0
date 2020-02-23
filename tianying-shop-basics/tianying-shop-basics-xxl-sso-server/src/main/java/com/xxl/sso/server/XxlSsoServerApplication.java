@@ -11,14 +11,14 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 /**
  * @author xuxueli 2018-03-22 23:41:47
  */
-@SpringBootApplication(exclude = { DataSourceAutoConfiguration.class,
-		DataSourceTransactionManagerAutoConfiguration.class, HibernateJpaAutoConfiguration.class })
+@SpringBootApplication(exclude = {DataSourceAutoConfiguration.class,
+        DataSourceTransactionManagerAutoConfiguration.class, HibernateJpaAutoConfiguration.class})
 @EnableEurekaClient
 @EnableFeignClients
 public class XxlSsoServerApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(XxlSsoServerApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(XxlSsoServerApplication.class, args);
+    }
 
 }
